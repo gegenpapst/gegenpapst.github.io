@@ -49,25 +49,20 @@
   }
 }">
 
-  <!-- Header -->
-  <header class="flex flex-wrap items-baseline gap-6 mb-10 pb-5 border-b border-[#222]">
-    <h1 class="text-2xl font-bold tracking-[0.2em] text-white">🎸 MUSIK</h1>
-    <a href="index.html" class="text-xs tracking-widest text-[#555] hover:text-[#e0c86c] no-underline transition-colors">
-      ← zurück zur Übersicht
-    </a>
-    <!-- Search -->
+  <!-- Nav + Search -->
+  <div class="flex flex-wrap items-center gap-4 mb-6">
+    <a href="index.html" class="text-xs tracking-widest text-[#555] hover:text-[#e0c86c] no-underline transition-colors">← zurück</a>
     <div class="ml-auto flex items-center gap-2">
-      <span class="text-xs tracking-widest text-[#444]">SUCHE</span>
       <input
         x-model="search"
         type="text"
-        placeholder="Artist oder Titel…"
+        placeholder="Suche…"
         class="bg-[#1a1a1a] border border-[#333] text-[#e0e0e0] text-xs px-3 py-1.5 tracking-wide
-               focus:outline-none focus:border-[#e0c86c] transition-colors w-48"
+               focus:outline-none focus:border-[#e0c86c] transition-colors w-40"
       />
       <span class="text-xs text-[#444]" x-text="filtered.length + ' / ' + videos.length"></span>
     </div>
-  </header>
+  </div>
 
   <!-- Artist filter -->
   <div class="flex flex-wrap gap-2 mb-6">
