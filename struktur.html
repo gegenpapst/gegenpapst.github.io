@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Startseite</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<style> body { font-family: 'Courier New', monospace; } </style>
+</head>
+<body class="bg-[#0d0d0d] text-[#e0e0e0] min-h-screen p-8">
+
+<div x-data="{
+  filter: 'all',
+  categories: [
+    { id: 'news',    icon: '📰', label: 'Nachrichten (DE)', color: '#e06c6c', border: '#3a2020',
+      items: [
+        { label: 'Spiegel',      href: 'https://www.spiegel.de' },
+        { label: 'Zeit',         href: 'https://www.zeit.de' },
+        { label: 'Süddeutsche',  href: 'https://www.sueddeutsche.de' },
+        { label: 'Focus',        href: 'https://www.focus.de' },
+        { label: 'Stern',        href: 'https://www.stern.de' },
+        { label: 'NZZ',          href: 'https://www.nzz.ch' },
+        { label: 'Katapult',     href: 'https://katapult-magazin.de' },
+      ]},
+    { id: 'int',     icon: '🌍', label: 'International',    color: '#e09c6c', border: '#3a2e20',
+      items: [
+        { label: 'BBC',           href: 'https://www.bbc.com' },
+        { label: 'New York Times',href: 'https://www.nytimes.com' },
+      ]},
+    { id: 'tech',    icon: '💻', label: 'Technologie',      color: '#6cb8e0', border: '#20303a',
+      items: [
+        { label: 'Heise',        href: 'https://www.heise.de' },
+        { label: 'Golem',        href: 'https://www.golem.de' },
+        { label: 'Netzpolitik',  href: 'https://netzpolitik.org' },
+        { label: 'Telepolis',    href: 'https://www.telepolis.de' },
+      ]},
+    { id: 'finance', icon: '💰', label: 'Finanzen',         color: '#6ce0a0', border: '#20352a',
+      items: [
+        { label: 'DKB',          href: 'https://www.dkb.de' },
+        { label: 'ING',          href: 'https://www.ing.de' },
+        { label: 'ExtraETF',     href: 'https://extraetf.com' },
+        { label: 'Check24',      href: 'https://www.check24.de' },
+        { label: 'JustETF',      href: 'https://www.justetf.com' },
+      ]},
+    { id: 'local',   icon: '📍', label: 'Lokal · Düsseldorf', color: '#c06ce0', border: '#30203a',
+      items: [
+        { label: 'RP-Online',    href: 'https://rp-online.de' },
+        { label: 'Lokalbuero',   href: 'https://www.lokalbuero.com' },
+        { label: 'Viernull',     href: 'https://www.viernull.de' },
+      ]},
+    { id: 'music',   icon: '🎸', label: 'Musik & Noten',    color: '#e0c86c', border: '#3a3420',
+      items: [
+        { label: 'Spotify',        href: 'https://www.spotify.com' },
+        { label: 'Ultimate Guitar', href: 'https://www.ultimate-guitar.com' },
+        { label: 'Music2me',       href: 'https://www.music2me.de' },
+      ], link: { href: 'musik.html', label: '▶ Meine Videos' } },
+    { id: 'media',   icon: '📺', label: 'Medien',           color: '#e06cb8', border: '#3a2030',
+      items: [
+        { label: 'YouTube',       href: 'https://www.youtube.com' },
+        { label: 'ARD Mediathek', href: 'https://www.ardmediathek.de' },
+        { label: 'ZDF',           href: 'https://www.zdf.de' },
+      ]},
+    { id: 'shop',    icon: '🛒', label: 'Shopping',         color: '#6ce0d8', border: '#203a38',
+      items: [
+        { label: 'Amazon',        href: 'https://www.amazon.de' },
+        { label: 'eBay',          href: 'https://www.ebay.de' },
+        { label: 'Kleinanzeigen', href: 'https://www.kleinanzeigen.de' },
+      ]},
+    { id: 'leisure', icon: '🍳', label: 'Kochen',           color: '#a0e06c', border: '#2a3a20',
+      items: [
+        { label: 'Chefkoch',      href: 'https://www.chefkoch.de' },
+      ]},
+    { id: 'leisure', icon: '📷', label: 'Fotografie',       color: '#a0e06c', border: '#2a3a20',
+      items: [
+        { label: 'Flickr',        href: 'https://www.flickr.com' },
+      ]},
+    { id: 'tech',    icon: '🤖', label: 'AI-Tools',         color: '#6cb8e0', border: '#20303a',
+      items: [
+        { label: 'ChatGPT',       href: 'https://chatgpt.com' },
+        { label: 'Claude',        href: 'https://claude.ai' },
+      ]},
+    { id: 'leisure', icon: '😄', label: 'Humor',            color: '#a0e06c', border: '#2a3a20',
+      items: [
+        { label: 'The Onion',     href: 'https://www.theonion.com' },
+        { label: 'Postillon',     href: 'https://www.der-postillon.com' },
+        { label: 'Titanic',       href: 'https://www.titanic-magazin.de' },
+      ]},
+    { id: 'local',   icon: '🎟️', label: 'Veranstaltungen', color: '#c06ce0', border: '#30203a',
+      items: [
+        { label: 'Eventim',         href: 'https://www.eventim.de' },
+        { label: 'Rausgegangen',   href: 'https://rausgegangen.de/duesseldorf' },
+        { label: 'Thedorf',        href: 'https://www.thedorf.de' },
+        { label: 'AZ Mülheim',     href: 'https://www.az-muelheim.de' },
+      ]},
+    { id: 'tech',    icon: '⌨️', label: 'Programmieren',   color: '#6cb8e0', border: '#20303a',
+      items: [
+        { label: 'MDN',           href: 'https://developer.mozilla.org' },
+        { label: 'GitHub',        href: 'https://github.com' },
+        { label: 'Stack Overflow',href: 'https://stackoverflow.com' },
+      ]},
+  ],
+  get filters() {
+    const seen = new Set(['all']);
+    const result = [{ id: 'all', label: 'Alle' }];
+    this.categories.forEach(c => {
+      if (!seen.has(c.id)) { seen.add(c.id); result.push({ id: c.id, label: c.label.split('·')[0].trim() }); }
+    });
+    return result;
+  },
+  get visible() {
+    return this.filter === 'all' ? this.categories : this.categories.filter(c => c.id === this.filter);
+  }
+}">
+
+  <!-- Header -->
+  <div class="text-center mb-10">
+    <h1 class="text-2xl font-bold tracking-[0.2em] text-white mb-1">Startseite</h1>
+    <p class="text-xs tracking-widest text-[#555]">persönliche Startseite · ~80 Links · 19 Kategorien</p>
+  </div>
+
+
+  <!-- Filter buttons -->
+  <div class="flex flex-wrap justify-center gap-2 mb-8">
+    <template x-for="f in filters" :key="f.id">
+      <button
+        @click="filter = f.id"
+        :class="filter === f.id
+          ? 'bg-white text-black'
+          : 'bg-[#1a1a1a] text-[#888] hover:text-white border border-[#333] hover:border-[#666]'"
+        class="px-3 py-1 text-xs tracking-widest uppercase transition-all duration-150"
+        x-text="f.label">
+      </button>
+    </template>
+  </div>
+
+  <!-- Cards grid -->
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-4 max-w-6xl mx-auto">
+    <template x-for="(cat, i) in visible" :key="i">
+      <div
+        class="bg-[#1a1a1a] p-4 transition-all duration-200 hover:scale-[1.02]"
+        :style="`border: 1px solid ${cat.border}; box-shadow: 0 0 0 0 ${cat.color}`"
+        @mouseenter="$el.style.borderColor = cat.color"
+        @mouseleave="$el.style.borderColor = cat.border"
+      >
+        <!-- Card title -->
+        <div class="text-[0.7rem] tracking-widest uppercase mb-3 pb-2 border-b border-[#2a2a2a]"
+             :style="`color: ${cat.color}`">
+          <span x-text="cat.icon" class="mr-1"></span>
+          <span x-text="cat.label"></span>
+        </div>
+        <!-- Links -->
+        <ul class="flex flex-col gap-1">
+          <template x-for="item in cat.items" :key="item.label">
+            <li class="text-[0.82rem] pl-2 border-l-2 border-[#2a2a2a]">
+              <span class="text-[#555]">› </span>
+              <a :href="item.href" target="_blank" rel="noopener"
+                 class="text-[#bbb] hover:text-white no-underline hover:underline transition-colors"
+                 x-text="item.label"></a>
+            </li>
+          </template>
+          <template x-if="cat.link">
+            <li class="text-[0.82rem] pl-2 border-l-2 border-[#2a2a2a] mt-1">
+              <a :href="cat.link.href" :style="`color: ${cat.color}`" class="no-underline hover:underline"
+                 x-text="cat.link.label"></a>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </template>
+  </div>
+
+  <!-- Stats -->
+  <div class="flex flex-wrap justify-center gap-8 mt-12 pt-6 border-t border-[#222] text-[0.7rem] tracking-widest text-[#555]">
+    <span>KATEGORIEN <span class="text-[#888]">19</span></span>
+    <span>LINKS <span class="text-[#888]">~80+</span></span>
+    <span>SPRACHE <span class="text-[#888]">DE</span></span>
+    <span>DESIGN <span class="text-[#888]">DARK</span></span>
+    <span>FRAMEWORK <span class="text-[#888]">TAILWIND + ALPINE</span></span>
+  </div>
+
+</div>
+</body>
+</html>
