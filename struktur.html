@@ -12,7 +12,7 @@
 <div x-data="{
   filter: 'all',
   categories: [
-    { id: 'news',    icon: '📰', label: 'Nachrichten (DE)', color: '#e06c6c', border: '#3a2020',
+    { id: 'news',    icon: '📰', label: 'News (DE)',         color: '#e06c6c', border: '#3a2020',
       items: [
         { label: 'Spiegel',      href: 'https://www.spiegel.de' },
         { label: 'Zeit',         href: 'https://www.zeit.de' },
@@ -22,10 +22,16 @@
         { label: 'NZZ',          href: 'https://www.nzz.ch' },
         { label: 'Katapult',     href: 'https://katapult-magazin.de' },
       ]},
-    { id: 'int',     icon: '🌍', label: 'International',    color: '#e09c6c', border: '#3a2e20',
+    { id: 'news',    icon: '🌍', label: 'News (International)', color: '#e09c6c', border: '#3a2e20',
       items: [
         { label: 'BBC',           href: 'https://www.bbc.com' },
         { label: 'New York Times',href: 'https://www.nytimes.com' },
+      ]},
+    { id: 'news',    icon: '📍', label: 'News (Lokal)',         color: '#c06ce0', border: '#30203a',
+      items: [
+        { label: 'RP-Online',    href: 'https://rp-online.de' },
+        { label: 'Lokalbuero',   href: 'https://www.lokalbuero.com' },
+        { label: 'Viernull',     href: 'https://www.viernull.de' },
       ]},
     { id: 'tech',    icon: '💻', label: 'Technologie',      color: '#6cb8e0', border: '#20303a',
       items: [
@@ -42,18 +48,15 @@
         { label: 'Check24',      href: 'https://www.check24.de' },
         { label: 'JustETF',      href: 'https://www.justetf.com' },
       ]},
-    { id: 'local',   icon: '📍', label: 'Lokal · Düsseldorf', color: '#c06ce0', border: '#30203a',
-      items: [
-        { label: 'RP-Online',    href: 'https://rp-online.de' },
-        { label: 'Lokalbuero',   href: 'https://www.lokalbuero.com' },
-        { label: 'Viernull',     href: 'https://www.viernull.de' },
-      ]},
-    { id: 'music',   icon: '🎸', label: 'Musik & Noten',    color: '#e0c86c', border: '#3a3420',
+    { id: 'music',   icon: '🎸', label: 'Musik',    color: '#e0c86c', border: '#3a3420',
       items: [
         { label: 'Spotify',        href: 'https://www.spotify.com' },
         { label: 'Ultimate Guitar', href: 'https://www.ultimate-guitar.com' },
         { label: 'Music2me',       href: 'https://www.music2me.de' },
-      ], link: { href: 'musik.html', label: '▶ Meine Videos' } },
+      ], links: [
+        { href: 'musik.html',           label: '▶ Meine Videos' },
+        { href: 'musik-invidious.html', label: '▶ Ohne Werbung (Invidious)' },
+      ]},
     { id: 'media',   icon: '📺', label: 'Medien',           color: '#e06cb8', border: '#3a2030',
       items: [
         { label: 'YouTube',       href: 'https://www.youtube.com' },
@@ -74,7 +77,7 @@
       items: [
         { label: 'Flickr',        href: 'https://www.flickr.com' },
       ]},
-    { id: 'tech',    icon: '🤖', label: 'AI-Tools',         color: '#6cb8e0', border: '#20303a',
+    { id: 'tech',    icon: '🤖', label: 'KI',         color: '#6cb8e0', border: '#20303a',
       items: [
         { label: 'ChatGPT',       href: 'https://chatgpt.com' },
         { label: 'Claude',        href: 'https://claude.ai' },
@@ -85,14 +88,14 @@
         { label: 'Postillon',     href: 'https://www.der-postillon.com' },
         { label: 'Titanic',       href: 'https://www.titanic-magazin.de' },
       ]},
-    { id: 'local',   icon: '🎟️', label: 'Veranstaltungen', color: '#c06ce0', border: '#30203a',
+    { id: 'events',  icon: '🎟️', label: 'Veranstaltungen', color: '#c06ce0', border: '#30203a',
       items: [
         { label: 'Eventim',         href: 'https://www.eventim.de' },
         { label: 'Rausgegangen',   href: 'https://rausgegangen.de/duesseldorf' },
         { label: 'Thedorf',        href: 'https://www.thedorf.de' },
         { label: 'AZ Mülheim',     href: 'https://www.az-muelheim.de' },
       ]},
-    { id: 'tech',    icon: '⌨️', label: 'Programmieren',   color: '#6cb8e0', border: '#20303a',
+    { id: 'tech',    icon: '⌨️', label: 'Entwicklung',   color: '#6cb8e0', border: '#20303a',
       items: [
         { label: 'MDN',           href: 'https://developer.mozilla.org' },
         { label: 'GitHub',        href: 'https://github.com' },
@@ -158,11 +161,13 @@
                  x-text="item.label"></a>
             </li>
           </template>
-          <template x-if="cat.link">
-            <li class="text-[0.82rem] pl-2 border-l-2 border-[#2a2a2a] mt-1">
-              <a :href="cat.link.href" :style="`color: ${cat.color}`" class="no-underline hover:underline"
-                 x-text="cat.link.label"></a>
-            </li>
+          <template x-if="cat.links">
+            <template x-for="link in cat.links" :key="link.href">
+              <li class="text-[0.82rem] pl-2 border-l-2 border-[#2a2a2a] mt-1">
+                <a :href="link.href" :style="`color: ${cat.color}`" class="no-underline hover:underline"
+                   x-text="link.label"></a>
+              </li>
+            </template>
           </template>
         </ul>
       </div>

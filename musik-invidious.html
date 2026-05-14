@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<title>Musik (Invidious) — stuettgen.eu</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+<style> body { font-family: 'Courier New', monospace; } </style>
+</head>
+<body class="bg-[#0d0d0d] text-[#e0e0e0] min-h-screen p-8">
+
+<div x-data="{
+  search: '',
+  instance: 'https://yewtu.be',
+  instances: [
+    'https://yewtu.be',
+    'https://inv.vern.cc',
+    'https://invidious.privacyredirect.com',
+    'https://invidious.nerdvpn.de',
+  ],
+  videos: [
+    { artist: 'Blur',                     title: 'Song 2',              id: 'SSbBvKaM6sk' },
+    { artist: 'Queens of the Stone Age',  title: 'I Sat by the Ocean', id: 'BZBKi2AyhaY' },
+    { artist: 'Queens of the Stone Age',  title: 'Go with the Flow',   id: 'DcHKOC64KnE' },
+    { artist: 'Red Hot Chili Peppers',    title: 'Californication',     id: 'YlUKcNNmywk' },
+    { artist: 'Red Hot Chili Peppers',    title: 'Under the Bridge',   id: 'GLvohMXgcBo' },
+    { artist: 'Jimi Hendrix',             title: 'The Wind Cries Mary', id: '1AyVXGHxHec' },
+    { artist: 'Kings of Leon',            title: 'Pyro',                id: 'gFp7q-IJqno' },
+    { artist: 'Interpol',                 title: 'Obstacle 1',          id: 'OC5zHACynR4' },
+    { artist: 'The Police',               title: 'Message in a Bottle', id: 'MbXWrmQW-OE' },
+    { artist: 'The White Stripes',        title: 'Seven Nation Army',   id: '0J2QdDbelmY' },
+    { artist: 'Rage Against the Machine', title: 'Bombtrack',           id: 'MUaL1FnotRQ' },
+    { artist: 'Rage Against the Machine', title: 'Killing in the Name', id: 'bWXazVhlyxQ' },
+    { artist: 'Bloc Party',               title: 'Helicopter',          id: '2R6S5CJWlco' },
+    { artist: 'Danzig',                   title: 'Mother',              id: '5loWhzgV9ew' },
+  ],
+  get filtered() {
+    if (!this.search.trim()) return this.videos;
+    const q = this.search.toLowerCase();
+    return this.videos.filter(v =>
+      v.artist.toLowerCase().includes(q) || v.title.toLowerCase().includes(q)
+    );
+  }
+}">
+
+  <!-- Header -->
+  <header class="flex flex-wrap items-baseline gap-6 mb-10 pb-5 border-b border-[#222]">
+    <h1 class="text-2xl font-bold tracking-[0.2em] text-white">🎸 MUSIK</h1>
+    <a href="musik.html" class="text-xs tracking-widest text-[#555] hover:text-[#e0c86c] no-underline transition-colors">
+      ▶ YouTube-Version
+    </a>
+    <a href="struktur.html" class="text-xs tracking-widest text-[#555] hover:text-[#e0c86c] no-underline transition-colors">
+      ← zurück zur Übersicht
+    </a>
+
+    <!-- Instance selector -->
+    <div class="ml-auto flex items-center gap-3">
+      <span class="text-xs tracking-widest text-[#444]">INSTANZ</span>
+      <select
+        x-model="instance"
+        class="bg-[#1a1a1a] border border-[#333] text-[#888] text-xs px-2 py-1.5
+               focus:outline-none focus:border-[#e0c86c] transition-colors">
+        <template x-for="i in instances" :key="i">
+          <option :value="i" x-text="i.replace('https://', '')"></option>
+        </template>
+      </select>
+
+      <!-- Search -->
+      <span class="text-xs tracking-widest text-[#444]">SUCHE</span>
+      <input
+        x-model="search"
+        type="text"
+        placeholder="Artist oder Titel…"
+        class="bg-[#1a1a1a] border border-[#333] text-[#e0e0e0] text-xs px-3 py-1.5 tracking-wide
+               focus:outline-none focus:border-[#e0c86c] transition-colors w-48"
+      />
+      <span class="text-xs text-[#444]" x-text="filtered.length + ' / ' + videos.length"></span>
+    </div>
+  </header>
+
+  <!-- Info banner -->
+  <div class="max-w-6xl mx-auto mb-6 px-3 py-2 border border-[#2a2a2a] text-[0.7rem] tracking-wide text-[#555]">
+    ⓘ Videos werden über <span class="text-[#888]" x-text="instance"></span> geladen — kein Google-Tracking, keine Werbung.
+    Bei Problemen eine andere Instanz wählen.
+  </div>
+
+  <!-- No results -->
+  <div x-show="filtered.length === 0" class="text-center text-[#444] tracking-widest text-sm mt-20">
+    KEINE TREFFER FÜR "<span x-text="search" class="text-[#666]"></span>"
+  </div>
+
+  <!-- Video grid -->
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(480px,1fr))] gap-7 max-w-6xl mx-auto">
+    <template x-for="v in filtered" :key="v.id">
+      <div class="bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#e0c86c] transition-colors duration-200">
+        <!-- Meta -->
+        <div class="px-4 py-3 border-b border-[#222]">
+          <div class="text-[0.7rem] tracking-widest uppercase text-[#e0c86c] mb-1" x-text="v.artist"></div>
+          <div class="text-base tracking-wide text-white" x-text="v.title"></div>
+        </div>
+        <!-- Embed -->
+        <div class="relative w-full" style="padding-bottom: 56.25%">
+          <iframe
+            :src="instance + '/embed/' + v.id"
+            :title="v.artist + ' – ' + v.title"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowfullscreen
+            class="absolute inset-0 w-full h-full border-0"
+          ></iframe>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <!-- Footer -->
+  <footer class="text-center mt-12 pt-6 border-t border-[#222] text-[0.7rem] tracking-widest text-[#444]">
+    <a href="struktur.html" class="text-[#555] hover:text-[#e0c86c] no-underline transition-colors">
+      ← stuettgen.eu/a
+    </a>
+    <span class="mx-3">·</span>
+    <span x-text="videos.length + ' videos'"></span>
+    <span class="mx-3">·</span>
+    <span>via Invidious</span>
+  </footer>
+
+</div>
+</body>
+</html>
