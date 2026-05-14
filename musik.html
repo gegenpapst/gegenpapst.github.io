@@ -41,27 +41,24 @@
   ],
   get filtered() {
     const q = this.search.toLowerCase().trim();
-    return this.videos.filter(v => {
-      const matchesFilter = this.filter === 'all' || v.artist === this.filter;
-      const matchesSearch = !q || v.artist.toLowerCase().includes(q) || v.title.toLowerCase().includes(q);
-      return matchesFilter && matchesSearch;
-    });
+    const counts = {};
+    this.videos.forEach(v => counts[v.artist] = (counts[v.artist] || 0) + 1);
+    return this.videos
+      .filter(v => {
+        const matchesFilter = this.filter === 'all' || v.artist === this.filter;
+        const matchesSearch = !q || v.artist.toLowerCase().includes(q) || v.title.toLowerCase().includes(q);
+        return matchesFilter && matchesSearch;
+      })
+      .sort((a, b) => {
+        if (counts[b.artist] !== counts[a.artist]) return counts[b.artist] - counts[a.artist];
+        return a.artist.localeCompare(b.artist);
+      });
   }
 }">
 
-  <!-- Nav + Search -->
-  <div class="flex flex-wrap items-center gap-4 mb-6">
+  <!-- Nav -->
+  <div class="flex items-center mb-6">
     <a href="index.html" class="text-xs tracking-widest text-[#555] hover:text-[#e0c86c] no-underline transition-colors">← zurück</a>
-    <div class="ml-auto flex items-center gap-2">
-      <input
-        x-model="search"
-        type="text"
-        placeholder="Suche…"
-        class="bg-[#1a1a1a] border border-[#333] text-[#e0e0e0] text-xs px-3 py-1.5 tracking-wide
-               focus:outline-none focus:border-[#e0c86c] transition-colors w-40"
-      />
-      <span class="text-xs text-[#444]" x-text="filtered.length + ' / ' + videos.length"></span>
-    </div>
   </div>
 
   <!-- Artist filter -->
@@ -78,12 +75,16 @@
     </template>
   </div>
 
-  <!-- uBlock hint -->
-  <div class="max-w-6xl mx-auto mb-6 px-3 py-2 border border-[#2a2a2a] text-[0.7rem] tracking-wide text-[#555]">
-    ⓘ Für werbefreie Wiedergabe:
-    <a href="https://ublockorigin.com" target="_blank" rel="noopener"
-       class="text-[#888] hover:text-[#e0c86c] transition-colors">uBlock Origin</a>
-    im Browser installieren.
+  <!-- Search -->
+  <div class="flex items-center gap-2 mb-8">
+    <input
+      x-model="search"
+      type="text"
+      placeholder="Suche…"
+      class="bg-[#1a1a1a] border border-[#333] text-[#e0e0e0] text-xs px-3 py-1.5 tracking-wide
+             focus:outline-none focus:border-[#e0c86c] transition-colors w-48"
+    />
+    <span class="text-xs text-[#444]" x-text="filtered.length + ' / ' + videos.length"></span>
   </div>
 
   <!-- No results -->
