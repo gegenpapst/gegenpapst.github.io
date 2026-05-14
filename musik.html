@@ -28,7 +28,7 @@
     { artist: 'Red Hot Chili Peppers',    title: 'Under the Bridge',   id: 'GLvohMXgcBo' },
     { artist: 'Jimi Hendrix',             title: 'The Wind Cries Mary', id: '1AyVXGHxHec' },
     { artist: 'Kings of Leon',            title: 'Pyro',                id: 'IoKfkQ4SdEQ' },
-    { artist: 'Interpol',                 title: 'Obstacle 1',          id: 'DG--dQMdiQI' },
+    { artist: 'Interpol',                 title: 'Obstacle 1',          id: 'DG--dQMdiQI', tab: 'https://drive.google.com/drive/folders/1HyfWcR0PnJkeH3r5WjU4l-RznpMg4mfL' },
     { artist: 'The Police',               title: 'Message in a Bottle', id: 'MbXWrmQW-OE' },
     { artist: 'The White Stripes',        title: 'Seven Nation Army',   id: '0J2QdDbelmY' },
     { artist: 'Rage Against the Machine', title: 'Bombtrack',           id: 'MUaL1FnotRQ' },
@@ -101,9 +101,16 @@
     <template x-for="v in filtered" :key="v.id">
       <div class="bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#e0c86c] transition-colors duration-200">
         <!-- Meta -->
-        <div class="px-4 py-3 border-b border-[#222]">
-          <div class="text-[0.7rem] tracking-widest uppercase text-[#e0c86c] mb-1" x-text="v.artist"></div>
-          <div class="text-base tracking-wide text-white" x-text="v.title"></div>
+        <div class="px-4 py-3 border-b border-[#222] flex items-start justify-between gap-2">
+          <div>
+            <div class="text-[0.7rem] tracking-widest uppercase text-[#e0c86c] mb-1" x-text="v.artist"></div>
+            <div class="text-base tracking-wide text-white" x-text="v.title"></div>
+          </div>
+          <a :href="v.tab || 'https://www.ultimate-guitar.com/search.php?search_type=title&value=' + encodeURIComponent(v.artist + ' ' + v.title)"
+             target="_blank" rel="noopener"
+             class="text-[0.65rem] tracking-widest text-[#444] hover:text-[#e0c86c] no-underline transition-colors shrink-0 mt-1">
+            TAB ↗
+          </a>
         </div>
         <!-- Embed -->
         <div class="relative w-full" style="padding-bottom: 56.25%">
