@@ -2,6 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Startseite</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -27,8 +28,11 @@
       items: [
         { label: 'BBC',           href: 'https://www.bbc.com' },
         { label: 'New York Times',href: 'https://www.nytimes.com' },
+        { label: 'The Guardian',  href: 'https://www.theguardian.com' },
+        { label: 'Reuters',       href: 'https://www.reuters.com' },
+        { label: 'Al Jazeera',    href: 'https://www.aljazeera.com' },
       ]},
-    { id: 'news',    icon: '📍', label: 'News (Lokal)',         color: '#c06ce0', border: '#30203a',
+    { id: 'news',    icon: '📍', label: 'News (Lokal)',         color: '#e07a50', border: '#3a2418',
       items: [
         { label: 'RP-Online',    href: 'https://rp-online.de' },
         { label: 'Lokalbuero',   href: 'https://www.lokalbuero.com' },
@@ -63,12 +67,14 @@
         { label: 'YouTube',       href: 'https://www.youtube.com' },
         { label: 'ARD Mediathek', href: 'https://www.ardmediathek.de' },
         { label: 'ZDF',           href: 'https://www.zdf.de' },
+        { label: 'Arte',          href: 'https://www.arte.tv/de' },
       ]},
     { id: 'shop',    icon: '🛒', label: 'Shopping',         color: '#6ce0d8', border: '#203a38',
       items: [
         { label: 'Amazon',        href: 'https://www.amazon.de' },
         { label: 'eBay',          href: 'https://www.ebay.de' },
         { label: 'Kleinanzeigen', href: 'https://www.kleinanzeigen.de' },
+        { label: 'Idealo',        href: 'https://www.idealo.de' },
       ]},
     { id: 'leisure', icon: '🍳', label: 'Kochen',           color: '#a0e06c', border: '#2a3a20',
       items: [
@@ -82,6 +88,8 @@
       items: [
         { label: 'ChatGPT',       href: 'https://chatgpt.com' },
         { label: 'Claude',        href: 'https://claude.ai' },
+        { label: 'Perplexity',    href: 'https://www.perplexity.ai' },
+        { label: 'Gemini',        href: 'https://gemini.google.com' },
       ]},
     { id: 'leisure', icon: '😄', label: 'Humor',            color: '#a0e06c', border: '#2a3a20',
       items: [
@@ -91,7 +99,7 @@
       ]},
     { id: 'events',  icon: '🎟️', label: 'Veranstaltungen', color: '#c06ce0', border: '#30203a',
       items: [
-{ label: 'Rausgegangen',   href: 'https://rausgegangen.de/duesseldorf' },
+        { label: 'Rausgegangen',   href: 'https://rausgegangen.de/duesseldorf' },
         { label: 'Thedorf',        href: 'https://www.thedorf.de' },
         { label: 'AZ Mülheim',     href: 'https://www.az-muelheim.de' },
       ]},
@@ -100,13 +108,19 @@
         { label: 'MDN',           href: 'https://developer.mozilla.org' },
         { label: 'GitHub',        href: 'https://github.com/gegenpapst' },
         { label: 'Stack Overflow',href: 'https://stackoverflow.com' },
+        { label: 'Can I Use',     href: 'https://caniuse.com' },
+      ]},
+    { id: 'divers',  icon: '🗂️', label: 'Divers',        color: '#b0b0b0', border: '#2a2a2a',
+      items: [
+        { label: 'Tennisplatz reservieren', href: 'https://sk-websites.de/clubmanager-5-g865ub/booking/overview' },
       ]},
   ],
+  filterLabels: { news: 'News', tech: 'Tech', finance: 'Finanzen', music: 'Musik', media: 'Medien', shop: 'Shopping', leisure: 'Freizeit', events: 'Veranstaltungen', divers: 'Divers' },
   get filters() {
     const seen = new Set(['all']);
     const result = [{ id: 'all', label: 'Alle' }];
     this.categories.forEach(c => {
-      if (!seen.has(c.id)) { seen.add(c.id); result.push({ id: c.id, label: c.label.split('·')[0].trim() }); }
+      if (!seen.has(c.id)) { seen.add(c.id); result.push({ id: c.id, label: this.filterLabels[c.id] || c.label }); }
     });
     return result;
   },
@@ -135,7 +149,7 @@
   <div class="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-4 max-w-6xl mx-auto">
     <template x-for="(cat, i) in visible" :key="i">
       <div
-        class="bg-[#1a1a1a] p-4 transition-all duration-200 hover:scale-[1.02]"
+        class="bg-[#1a1a1a] p-4 transition-all duration-200"
         :style="`border: 1px solid ${cat.border}; box-shadow: 0 0 0 0 ${cat.color}`"
         @mouseenter="$el.style.borderColor = cat.color"
         @mouseleave="$el.style.borderColor = cat.border"
@@ -149,7 +163,7 @@
         <!-- Links -->
         <ul class="flex flex-col gap-1">
           <template x-for="item in cat.items" :key="item.label">
-            <li class="text-[0.82rem] pl-2 border-l-2 border-[#2a2a2a]">
+            <li class="text-[0.82rem] pl-2 py-0.5 border-l-2 border-[#2a2a2a]">
               <span class="text-[#555]">› </span>
               <a :href="item.href" target="_blank" rel="noopener"
                  class="text-[#bbb] hover:text-white no-underline hover:underline transition-colors"
@@ -171,8 +185,8 @@
 
   <!-- Stats -->
   <div class="flex flex-wrap justify-center gap-8 mt-12 pt-6 border-t border-[#222] text-[0.7rem] tracking-widest text-[#555]">
-    <span>KATEGORIEN <span class="text-[#888]">19</span></span>
-    <span>LINKS <span class="text-[#888]">~80+</span></span>
+    <span>KATEGORIEN <span class="text-[#888]" x-text="categories.length"></span></span>
+    <span>LINKS <span class="text-[#888]" x-text="categories.reduce((s,c) => s + c.items.length, 0)"></span></span>
     <span>SPRACHE <span class="text-[#888]">DE</span></span>
     <span>DESIGN <span class="text-[#888]">DARK</span></span>
     <span>FRAMEWORK <span class="text-[#888]">TAILWIND + ALPINE</span></span>

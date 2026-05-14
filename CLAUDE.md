@@ -1,38 +1,70 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code when working in this repository.
+This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Project overview
 
-Personal homepage for stuettgen.eu — a static, single-page start page with linked sub-pages. No build tools, no dependencies, no server required.
+Personal homepage for stuettgen.eu — a static start page with linked sub-pages. No build step, no server required. Open any `.html` file directly in a browser.
 
-Open any `.html` file directly in a browser.
+**Public URL:** https://gegenpapst.github.io
 
-## Structure
+## Pages
 
-```
-homepage/
-├── struktur.html   # Landing page — visual overview of stuettgen.eu/a categories
-└── musik.html      # Music sub-page — embedded YouTube videos
-```
+- **[index.html](index.html)** — Landing page with filterable category cards linking to external sites
+- **[musik.html](musik.html)** — Music sub-page with filterable/searchable YouTube video grid
+
+## Tech stack
+
+Both pages load from CDN — no local dependencies:
+
+- **Tailwind CSS** (`cdn.tailwindcss.com`) — utility classes for layout and spacing
+- **Alpine.js** (`alpinejs@3.x.x`) — reactive data and filtering, via `x-data` on the root `<div>`
+- **`Courier New` monospace** — applied via `<style>` tag (not Tailwind), sitewide
 
 ## Design system
 
-- **Background**: `#0d0d0d`
-- **Text**: `#e0e0e0` / `#fff` for headings
-- **Accent**: `#e0c86c` (gold) for music, links, hover states
-- **Font**: `Courier New`, monospace throughout
-- **Cards**: `#1a1a1a` background, `1px solid #2a2a2a` border, hover highlights border in accent color
-- **Layout**: CSS Grid with `auto-fill / minmax` — no frameworks
+| Token | Value |
+|---|---|
+| Background | `#0d0d0d` |
+| Text | `#e0e0e0` |
+| Accent (gold) | `#e0c86c` — used in musik.html and hover states |
+| Card background | `#1a1a1a` |
+| Card border (default) | `#2a2a2a` |
 
-## Conventions
+Category colors in index.html are per-category inline values (`cat.color`, `cat.border`) — not CSS classes. Hover effects swap border color via Alpine `@mouseenter`/`@mouseleave`.
 
-- Pure vanilla HTML + CSS, no JavaScript unless needed
-- All pages share the same dark theme and Courier New font
-- Navigation: each sub-page links back to `struktur.html` in the header
-- Video embeds use 16:9 aspect ratio via `padding-bottom: 56.25%` wrapper
-- Category color coding in `struktur.html` uses CSS classes like `.cat-music`, `.cat-news` etc.
+## Data structures
 
-## Adding videos to musik.html
+### index.html — category object
 
-Copy an existing `.video-card` block and replace the artist, title, and YouTube embed ID (`youtube.com/embed/VIDEO_ID`).
+```js
+{ id: 'tech', icon: '💻', label: 'Technologie', color: '#6cb8e0', border: '#20303a',
+  items: [
+    { label: 'Heise', href: 'https://www.heise.de' },
+  ],
+  links: [                          // optional: internal page links shown below items
+    { href: 'musik.html', label: '▶ Videos' },
+  ]
+}
+```
+
+Categories with the same `id` are grouped under the same filter button. Multiple categories can share an `id` (e.g. three separate news cards all use `id: 'news'`).
+
+### musik.html — video object
+
+```js
+{ artist: 'Interpol', title: 'Obstacle 1', id: 'DG--dQMdiQI',
+  tab: 'https://drive.google.com/...' }  // optional: overrides default Ultimate Guitar search link
+```
+
+Videos sort by descending artist video count, then alphabetically by artist.
+
+## Adding content
+
+**New category card** (index.html): Add a new object to the `categories` array. Reuse an existing `id` to merge into an existing filter, or introduce a new one for a new filter button.
+
+**New video** (musik.html): Add an object to the `videos` array with `artist`, `title`, and the YouTube video ID (`id`). Optionally add `tab` with a direct tab/chord URL.
+
+## Navigation
+
+Sub-pages link back to `index.html` (not `struktur.html`). The back link appears as `← zurück` in a top nav bar, using gold on hover (`text-[#e0c86c]`).
