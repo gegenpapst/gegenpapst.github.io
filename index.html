@@ -21,6 +21,7 @@
         { label: 'Stern',        href: 'https://www.stern.de' },
         { label: 'NZZ',          href: 'https://www.nzz.ch' },
         { label: 'Katapult',     href: 'https://katapult-magazin.de' },
+        { label: 'Google News',  href: 'https://news.google.com/home?hl=de&gl=DE&ceid=DE:de' },
       ]},
     { id: 'news',    icon: '🌍', label: 'News (International)', color: '#e09c6c', border: '#3a2e20',
       items: [
@@ -32,6 +33,7 @@
         { label: 'RP-Online',    href: 'https://rp-online.de' },
         { label: 'Lokalbuero',   href: 'https://www.lokalbuero.com' },
         { label: 'Viernull',     href: 'https://www.viernull.de' },
+        { label: 'Terz',         href: 'https://www.terz.org' },
       ]},
     { id: 'tech',    icon: '💻', label: 'Technologie',      color: '#6cb8e0', border: '#20303a',
       items: [
@@ -54,7 +56,7 @@
         { label: 'Ultimate Guitar', href: 'https://www.ultimate-guitar.com' },
         { label: 'Music2me',       href: 'https://www.music2me.de' },
       ], links: [
-        { href: 'musik.html', label: '▶ Meine Videos' },
+        { href: 'musik.html', label: '▶ Videos' },
       ]},
     { id: 'media',   icon: '📺', label: 'Medien',           color: '#e06cb8', border: '#3a2030',
       items: [
@@ -89,15 +91,14 @@
       ]},
     { id: 'events',  icon: '🎟️', label: 'Veranstaltungen', color: '#c06ce0', border: '#30203a',
       items: [
-        { label: 'Eventim',         href: 'https://www.eventim.de' },
-        { label: 'Rausgegangen',   href: 'https://rausgegangen.de/duesseldorf' },
+{ label: 'Rausgegangen',   href: 'https://rausgegangen.de/duesseldorf' },
         { label: 'Thedorf',        href: 'https://www.thedorf.de' },
         { label: 'AZ Mülheim',     href: 'https://www.az-muelheim.de' },
       ]},
     { id: 'tech',    icon: '⌨️', label: 'Entwicklung',   color: '#6cb8e0', border: '#20303a',
       items: [
         { label: 'MDN',           href: 'https://developer.mozilla.org' },
-        { label: 'GitHub',        href: 'https://github.com' },
+        { label: 'GitHub',        href: 'https://github.com/gegenpapst' },
         { label: 'Stack Overflow',href: 'https://stackoverflow.com' },
       ]},
   ],
@@ -115,6 +116,14 @@
 }">
 
 
+
+  <!-- Header -->
+  <header class="flex flex-wrap items-baseline gap-6 mb-8 pb-5 border-b border-[#222]">
+    <h1 class="text-2xl font-bold tracking-[0.2em] text-white">◉</h1>
+    <a href="musik.html" class="text-xs tracking-widest text-[#555] hover:text-[#e0c86c] no-underline transition-colors">
+      🎸 Videos
+    </a>
+  </header>
 
   <!-- Filter buttons -->
   <div class="flex flex-wrap justify-center gap-2 mb-8">
