@@ -11,28 +11,40 @@
 
 <div x-data="{
   search: '',
+  filter: 'all',
+  get artists() {
+    const seen = new Set();
+    const result = [{ id: 'all', label: 'Alle' }];
+    this.videos.forEach(v => {
+      if (!seen.has(v.artist)) { seen.add(v.artist); result.push({ id: v.artist, label: v.artist }); }
+    });
+    return result;
+  },
   videos: [
     { artist: 'Blur',                     title: 'Song 2',              id: 'SSbBvKaM6sk' },
-    { artist: 'Queens of the Stone Age',  title: 'I Sat by the Ocean', id: 'BZBKi2AyhaY' },
+    { artist: 'Queens of the Stone Age',  title: 'I Sat by the Ocean (Live)', id: '4E4S0XWPMgQ' },
     { artist: 'Queens of the Stone Age',  title: 'Go with the Flow',   id: 'DcHKOC64KnE' },
     { artist: 'Red Hot Chili Peppers',    title: 'Californication',     id: 'YlUKcNNmywk' },
     { artist: 'Red Hot Chili Peppers',    title: 'Under the Bridge',   id: 'GLvohMXgcBo' },
     { artist: 'Jimi Hendrix',             title: 'The Wind Cries Mary', id: '1AyVXGHxHec' },
     { artist: 'Kings of Leon',            title: 'Pyro',                id: 'gFp7q-IJqno' },
-    { artist: 'Interpol',                 title: 'Obstacle 1',          id: 'OC5zHACynR4' },
+    { artist: 'Interpol',                 title: 'Obstacle 1',          id: 'DG--dQMdiQI' },
     { artist: 'The Police',               title: 'Message in a Bottle', id: 'MbXWrmQW-OE' },
     { artist: 'The White Stripes',        title: 'Seven Nation Army',   id: '0J2QdDbelmY' },
     { artist: 'Rage Against the Machine', title: 'Bombtrack',           id: 'MUaL1FnotRQ' },
     { artist: 'Rage Against the Machine', title: 'Killing in the Name', id: 'bWXazVhlyxQ' },
     { artist: 'Bloc Party',               title: 'Helicopter',          id: '2R6S5CJWlco' },
     { artist: 'Danzig',                   title: 'Mother',              id: '5loWhzgV9ew' },
+    { artist: 'Ramones',                  title: 'Blitzkrieg Bop',                    id: 'skdE0KAFCEA' },
+    { artist: 'Ton Steine Scherben',      title: 'Die letzte Schlacht gewinnen wir',  id: 'pW5w6BF1OwU' },
   ],
   get filtered() {
-    if (!this.search.trim()) return this.videos;
-    const q = this.search.toLowerCase();
-    return this.videos.filter(v =>
-      v.artist.toLowerCase().includes(q) || v.title.toLowerCase().includes(q)
-    );
+    const q = this.search.toLowerCase().trim();
+    return this.videos.filter(v => {
+      const matchesFilter = this.filter === 'all' || v.artist === this.filter;
+      const matchesSearch = !q || v.artist.toLowerCase().includes(q) || v.title.toLowerCase().includes(q);
+      return matchesFilter && matchesSearch;
+    });
   }
 }">
 
@@ -55,6 +67,20 @@
       <span class="text-xs text-[#444]" x-text="filtered.length + ' / ' + videos.length"></span>
     </div>
   </header>
+
+  <!-- Artist filter -->
+  <div class="flex flex-wrap gap-2 mb-6">
+    <template x-for="a in artists" :key="a.id">
+      <button
+        @click="filter = a.id"
+        :class="filter === a.id
+          ? 'bg-white text-black'
+          : 'bg-[#1a1a1a] text-[#888] hover:text-white border border-[#333] hover:border-[#666]'"
+        class="px-3 py-1 text-xs tracking-widest uppercase transition-all duration-150"
+        x-text="a.label">
+      </button>
+    </template>
+  </div>
 
   <!-- uBlock hint -->
   <div class="max-w-6xl mx-auto mb-6 px-3 py-2 border border-[#2a2a2a] text-[0.7rem] tracking-wide text-[#555]">
