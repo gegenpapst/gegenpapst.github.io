@@ -13,6 +13,11 @@
       body {
         font-family: "Courier New", monospace;
       }
+      @media (max-width: 639px) {
+        body {
+          font-family: ui-monospace, "SF Mono", Menlo, Monaco, monospace;
+        }
+      }
     </style>
   </head>
   <body class="bg-[#0d0d0d] text-[#e0e0e0] min-h-screen p-4 sm:p-8">
@@ -23,6 +28,7 @@
     { id: 'quicklinks', icon: '⚡', label: 'Quicklinks',    color: '#b0b0b0', border: '#2a2a2a',
       items: [
         { label: 'Tennisplatz reservieren', href: 'https://sk-websites.de/clubmanager-5-g865ub/booking/overview' },
+        { label: 'Gmail',   href: 'https://mail.google.com/mail/u/0/' },
         { label: 'Webmail', href: 'https://webmail.1blu.de/?_task=mail&_mbox=INBOX' },
         { label: 'Kalender', href: 'https://calendar.google.com/calendar/u/0/r' },
       ]},
@@ -145,8 +151,8 @@
             @click="filter = f.id"
             :class="filter === f.id
           ? 'bg-white text-black'
-          : 'bg-[#1a1a1a] text-[#888] hover:text-white border border-[#333] hover:border-[#666]'"
-            class="px-4 py-2 text-xs tracking-widest uppercase transition-all duration-150"
+          : 'bg-[#1a1a1a] text-[#aaa] hover:text-white border border-[#333] hover:border-[#666]'"
+            class="px-4 py-2 text-sm tracking-widest uppercase transition-all duration-150"
             x-text="f.label"
           ></button>
         </template>
@@ -182,7 +188,7 @@
                     :href="item.href"
                     target="_blank"
                     rel="noopener"
-                    class="text-[#bbb] hover:text-white no-underline hover:underline transition-colors"
+                    class="text-[#d0d0d0] hover:text-white no-underline hover:underline transition-colors"
                     x-text="item.label"
                   ></a>
                 </li>
@@ -208,23 +214,23 @@
 
       <!-- Stats -->
       <div
-        class="flex flex-wrap justify-center gap-8 mt-12 pt-6 border-t border-[#222] text-[0.7rem] tracking-widest text-[#555]"
+        class="flex flex-wrap justify-center gap-8 mt-12 pt-6 border-t border-[#222] text-[0.7rem] tracking-widest text-[#666]"
       >
         <span
           >KATEGORIEN
-          <span class="text-[#888]" x-text="categories.length"></span
+          <span class="text-[#aaa]" x-text="categories.length"></span
         ></span>
         <span
           >LINKS
           <span
-            class="text-[#888]"
+            class="text-[#aaa]"
             x-text="categories.reduce((s,c) => s + c.items.length, 0)"
           ></span
         ></span>
-        <span>SPRACHE <span class="text-[#888]">DE</span></span>
-        <span>DESIGN <span class="text-[#888]">DARK</span></span>
+        <span>SPRACHE <span class="text-[#aaa]">DE</span></span>
+        <span>DESIGN <span class="text-[#aaa]">DARK</span></span>
         <span
-          >FRAMEWORK <span class="text-[#888]">TAILWIND + ALPINE</span></span
+          >FRAMEWORK <span class="text-[#aaa]">TAILWIND + ALPINE</span></span
         >
       </div>
     </div>

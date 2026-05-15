@@ -6,9 +6,14 @@
 <title>Musik — stuettgen.eu</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<style> body { font-family: 'Courier New', monospace; } </style>
+<style>
+  body { font-family: 'Courier New', monospace; }
+  @media (max-width: 639px) {
+    body { font-family: ui-monospace, 'SF Mono', Menlo, Monaco, monospace; }
+  }
+</style>
 </head>
-<body class="bg-[#0d0d0d] text-[#e0e0e0] min-h-screen p-8">
+<body class="bg-[#0d0d0d] text-[#e0e0e0] min-h-screen p-4 sm:p-8">
 
 <div x-data="{
   search: '',
@@ -69,8 +74,8 @@
         @click="filter = a.id"
         :class="filter === a.id
           ? 'bg-white text-black'
-          : 'bg-[#1a1a1a] text-[#888] hover:text-white border border-[#333] hover:border-[#666]'"
-        class="px-3 py-1 text-xs tracking-widest uppercase transition-all duration-150"
+          : 'bg-[#1a1a1a] text-[#aaa] hover:text-white border border-[#333] hover:border-[#666]'"
+        class="px-3 py-1 text-sm tracking-widest uppercase transition-all duration-150"
         x-text="a.label">
       </button>
     </template>
@@ -85,7 +90,7 @@
       class="bg-[#1a1a1a] border border-[#333] text-[#e0e0e0] text-xs px-3 py-1.5 tracking-wide
              focus:outline-none focus:border-[#e0c86c] transition-colors w-48"
     />
-    <span class="text-xs text-[#444]" x-text="filtered.length + ' / ' + videos.length"></span>
+    <span class="text-xs text-[#666]" x-text="filtered.length + ' / ' + videos.length"></span>
   </div>
 
   <!-- No results -->
@@ -94,7 +99,7 @@
   </div>
 
   <!-- Video grid -->
-  <div class="grid grid-cols-[repeat(auto-fill,minmax(480px,1fr))] gap-7 max-w-6xl mx-auto">
+  <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-7 max-w-6xl mx-auto">
     <template x-for="v in filtered" :key="v.id">
       <div class="bg-[#1a1a1a] border border-[#2a2a2a] hover:border-[#e0c86c] transition-colors duration-200">
         <!-- Meta -->
@@ -105,7 +110,7 @@
           </div>
           <a :href="v.tab || 'https://www.ultimate-guitar.com/search.php?search_type=title&value=' + encodeURIComponent(v.artist + ' ' + v.title)"
              target="_blank" rel="noopener"
-             class="text-[0.65rem] tracking-widest text-[#444] hover:text-[#e0c86c] no-underline transition-colors shrink-0 mt-1">
+             class="text-[0.7rem] tracking-widest text-[#666] hover:text-[#e0c86c] no-underline transition-colors shrink-0 mt-1">
             TAB ↗
           </a>
         </div>
@@ -124,8 +129,8 @@
   </div>
 
   <!-- Footer -->
-  <footer class="text-center mt-12 pt-6 border-t border-[#222] text-[0.7rem] tracking-widest text-[#444]">
-    <a href="index.html" class="text-[#555] hover:text-[#e0c86c] no-underline transition-colors">
+  <footer class="text-center mt-12 pt-6 border-t border-[#222] text-[0.7rem] tracking-widest text-[#666]">
+    <a href="index.html" class="text-[#666] hover:text-[#e0c86c] no-underline transition-colors">
       ← stuettgen.eu/a
     </a>
     <span class="mx-3">·</span>
