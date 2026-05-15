@@ -20,6 +20,12 @@
       x-data="{
   filter: 'all',
   categories: [
+    { id: 'quicklinks', icon: '⚡', label: 'Quicklinks',    color: '#b0b0b0', border: '#2a2a2a',
+      items: [
+        { label: 'Tennisplatz reservieren', href: 'https://sk-websites.de/clubmanager-5-g865ub/booking/overview' },
+        { label: 'Webmail', href: 'https://webmail.1blu.de/?_task=mail&_mbox=INBOX' },
+        { label: 'Kalender', href: 'https://calendar.google.com/calendar/u/0/r' },
+      ]},
     { id: 'news',    icon: '📰', label: 'News (DE)',         color: '#e06c6c', border: '#3a2020',
       items: [
         { label: 'Spiegel',      href: 'https://www.spiegel.de' },
@@ -117,12 +123,8 @@
         { label: 'Stack Overflow',href: 'https://stackoverflow.com' },
         { label: 'Can I Use',     href: 'https://caniuse.com' },
       ]},
-    { id: 'divers',  icon: '🗂️', label: 'Divers',        color: '#b0b0b0', border: '#2a2a2a',
-      items: [
-        { label: 'Tennisplatz reservieren', href: 'https://sk-websites.de/clubmanager-5-g865ub/booking/overview' },
-      ]},
   ],
-  filterLabels: { news: 'News', tech: 'Tech', finance: 'Finanzen', music: 'Musik', media: 'Medien', shop: 'Shopping', leisure: 'Freizeit', events: 'Veranstaltungen', divers: 'Divers' },
+  filterLabels: { quicklinks: 'Quicklinks', news: 'News', tech: 'Tech', finance: 'Finanzen', music: 'Musik', media: 'Medien', shop: 'Shopping', leisure: 'Freizeit', events: 'Veranstaltungen' },
   get filters() {
     const seen = new Set(['all']);
     const result = [{ id: 'all', label: 'Alle' }];
