@@ -1,16 +1,23 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="de">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Startseite</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-<style> body { font-family: 'Courier New', monospace; } </style>
-</head>
-<body class="bg-[#0d0d0d] text-[#e0e0e0] min-h-screen p-8">
-
-<div x-data="{
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Startseite</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"
+    ></script>
+    <style>
+      body {
+        font-family: "Courier New", monospace;
+      }
+    </style>
+  </head>
+  <body class="bg-[#0d0d0d] text-[#e0e0e0] min-h-screen p-4 sm:p-8">
+    <div
+      x-data="{
   filter: 'all',
   categories: [
     { id: 'news',    icon: '📰', label: 'News (DE)',         color: '#e06c6c', border: '#3a2020',
@@ -127,71 +134,97 @@
   get visible() {
     return this.filter === 'all' ? this.categories : this.categories.filter(c => c.id === this.filter);
   }
-}">
-
-
-
-  <!-- Filter buttons -->
-  <div class="flex flex-wrap justify-center gap-2 mb-8">
-    <template x-for="f in filters" :key="f.id">
-      <button
-        @click="filter = f.id"
-        :class="filter === f.id
+}"
+    >
+      <!-- Filter buttons -->
+      <div class="flex flex-wrap justify-center gap-2 mb-8">
+        <template x-for="f in filters" :key="f.id">
+          <button
+            @click="filter = f.id"
+            :class="filter === f.id
           ? 'bg-white text-black'
           : 'bg-[#1a1a1a] text-[#888] hover:text-white border border-[#333] hover:border-[#666]'"
-        class="px-3 py-1 text-xs tracking-widest uppercase transition-all duration-150"
-        x-text="f.label">
-      </button>
-    </template>
-  </div>
-
-  <!-- Cards grid -->
-  <div class="grid grid-cols-[repeat(auto-fill,minmax(210px,1fr))] gap-4 max-w-6xl mx-auto">
-    <template x-for="(cat, i) in visible" :key="i">
-      <div
-        class="bg-[#1a1a1a] p-4 transition-all duration-200"
-        :style="`border: 1px solid ${cat.border}; box-shadow: 0 0 0 0 ${cat.color}`"
-        @mouseenter="$el.style.borderColor = cat.color"
-        @mouseleave="$el.style.borderColor = cat.border"
-      >
-        <!-- Card title -->
-        <div class="text-[0.7rem] tracking-widest uppercase mb-3 pb-2 border-b border-[#2a2a2a]"
-             :style="`color: ${cat.color}`">
-          <span x-text="cat.icon" class="mr-1"></span>
-          <span x-text="cat.label"></span>
-        </div>
-        <!-- Links -->
-        <ul class="flex flex-col gap-1">
-          <template x-for="item in cat.items" :key="item.label">
-            <li class="text-[0.82rem] pl-2 py-0.5 border-l-2 border-[#2a2a2a]">
-              <span class="text-[#555]">› </span>
-              <a :href="item.href" target="_blank" rel="noopener"
-                 class="text-[#bbb] hover:text-white no-underline hover:underline transition-colors"
-                 x-text="item.label"></a>
-            </li>
-          </template>
-          <template x-if="cat.links">
-            <template x-for="link in cat.links" :key="link.href">
-              <li class="text-[0.82rem] pl-2 border-l-2 border-[#2a2a2a] mt-1">
-                <a :href="link.href" :style="`color: ${cat.color}`" class="no-underline hover:underline"
-                   x-text="link.label"></a>
-              </li>
-            </template>
-          </template>
-        </ul>
+            class="px-4 py-2 text-xs tracking-widest uppercase transition-all duration-150"
+            x-text="f.label"
+          ></button>
+        </template>
       </div>
-    </template>
-  </div>
 
-  <!-- Stats -->
-  <div class="flex flex-wrap justify-center gap-8 mt-12 pt-6 border-t border-[#222] text-[0.7rem] tracking-widest text-[#555]">
-    <span>KATEGORIEN <span class="text-[#888]" x-text="categories.length"></span></span>
-    <span>LINKS <span class="text-[#888]" x-text="categories.reduce((s,c) => s + c.items.length, 0)"></span></span>
-    <span>SPRACHE <span class="text-[#888]">DE</span></span>
-    <span>DESIGN <span class="text-[#888]">DARK</span></span>
-    <span>FRAMEWORK <span class="text-[#888]">TAILWIND + ALPINE</span></span>
-  </div>
+      <!-- Cards grid -->
+      <div
+        class="grid grid-cols-[repeat(auto-fill,minmax(160px,1fr))] gap-4 max-w-6xl mx-auto"
+      >
+        <template x-for="(cat, i) in visible" :key="i">
+          <div
+            class="bg-[#1a1a1a] p-4 transition-all duration-200"
+            :style="`border: 1px solid ${cat.border}; box-shadow: 0 0 0 0 ${cat.color}`"
+            @mouseenter="$el.style.borderColor = cat.color"
+            @mouseleave="$el.style.borderColor = cat.border"
+          >
+            <!-- Card title -->
+            <div
+              class="text-[0.75rem] tracking-widest uppercase mb-3 pb-2 border-b border-[#2a2a2a]"
+              :style="`color: ${cat.color}`"
+            >
+              <span x-text="cat.icon" class="mr-1"></span>
+              <span x-text="cat.label"></span>
+            </div>
+            <!-- Links -->
+            <ul class="flex flex-col gap-1">
+              <template x-for="item in cat.items" :key="item.label">
+                <li
+                  class="text-[0.875rem] pl-2 py-0.5 border-l-2 border-[#2a2a2a]"
+                >
+                  <span class="text-[#555]">› </span>
+                  <a
+                    :href="item.href"
+                    target="_blank"
+                    rel="noopener"
+                    class="text-[#bbb] hover:text-white no-underline hover:underline transition-colors"
+                    x-text="item.label"
+                  ></a>
+                </li>
+              </template>
+              <template x-if="cat.links">
+                <template x-for="link in cat.links" :key="link.href">
+                  <li
+                    class="text-[0.875rem] pl-2 border-l-2 border-[#2a2a2a] mt-1"
+                  >
+                    <a
+                      :href="link.href"
+                      :style="`color: ${cat.color}`"
+                      class="no-underline hover:underline"
+                      x-text="link.label"
+                    ></a>
+                  </li>
+                </template>
+              </template>
+            </ul>
+          </div>
+        </template>
+      </div>
 
-</div>
-</body>
+      <!-- Stats -->
+      <div
+        class="flex flex-wrap justify-center gap-8 mt-12 pt-6 border-t border-[#222] text-[0.7rem] tracking-widest text-[#555]"
+      >
+        <span
+          >KATEGORIEN
+          <span class="text-[#888]" x-text="categories.length"></span
+        ></span>
+        <span
+          >LINKS
+          <span
+            class="text-[#888]"
+            x-text="categories.reduce((s,c) => s + c.items.length, 0)"
+          ></span
+        ></span>
+        <span>SPRACHE <span class="text-[#888]">DE</span></span>
+        <span>DESIGN <span class="text-[#888]">DARK</span></span>
+        <span
+          >FRAMEWORK <span class="text-[#888]">TAILWIND + ALPINE</span></span
+        >
+      </div>
+    </div>
+  </body>
 </html>
